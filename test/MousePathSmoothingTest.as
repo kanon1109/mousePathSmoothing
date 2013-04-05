@@ -16,14 +16,15 @@ public class MousePathSmoothingTest extends Sprite
 		var spt:Sprite = new Sprite();
 		this.addChild(spt);
 		this.mousePathSmoothing = new MousePathSmoothing(spt, stage, 30);
+		this.mousePathSmoothing.thickness = 3;
+		this.mousePathSmoothing.lineColor = 0xFF00F0;
 		this.mousePathSmoothing.init();
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyDownHandler);
 	}
 	
 	private function KeyDownHandler(event:KeyboardEvent):void 
 	{
-		this.mousePathSmoothing.destroy();
-		this.mousePathSmoothing.init();
+		this.mousePathSmoothing.clear();
 	}
 }
 }

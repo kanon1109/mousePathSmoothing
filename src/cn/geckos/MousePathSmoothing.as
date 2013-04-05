@@ -20,11 +20,17 @@ public class MousePathSmoothing
 	private var smoothLength:int;
 	//保存下一个点的绘制距离
 	private var distance:Number;
+	//线条粗细
+	private var _thickness:Number;
+	//线条颜色
+	private var _lineColor:Number;
 	public function MousePathSmoothing(canvas:Sprite, stage:Stage, smoothLength:int) 
 	{
 		this.stage = stage;
 		this.canvas = canvas;
 		this.smoothLength = smoothLength;
+		this.thickness = 1;
+		this.lineColor = 0x000000;
 	}
 	
 	/**
@@ -41,8 +47,7 @@ public class MousePathSmoothing
 	{
 		this.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMoveHandler);
 		this.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler);
-		this.canvas.graphics.clear();
-		this.clearList(this.points);
+		this.clear();
 		for (var i:int = 0; i < this.smoothLength + 1; i++)
 		{
 			this.points.push(new Point(this.stage.mouseX, this.stage.mouseY));
@@ -94,7 +99,7 @@ public class MousePathSmoothing
 	private function drawLine(canvas:Sprite, points:Array):void
 	{
 		var startPos:Point = points[0];
-		canvas.graphics.lineStyle(1, 0xFF0000);
+		canvas.graphics.lineStyle(this.thickness, this.lineColor);
 		canvas.graphics.moveTo(startPos.x, startPos.y);
 		var length:int = points.length;
 		var p:Point;
@@ -120,6 +125,16 @@ public class MousePathSmoothing
 	}
 	
 	/**
+	 * 清除
+	 */
+	public function clear():void
+	{
+		if (!this.canvas) return;
+		this.canvas.graphics.clear();
+		this.clearList(this.points);
+	}
+	
+	/**
 	 * 销毁
 	 */
 	public function destroy():void
@@ -134,6 +149,24 @@ public class MousePathSmoothing
 		this.points = null;
 		if (this.canvas)
 			this.canvas.graphics.clear();
+	}
+	
+	/**
+	 * 线条粗细
+	 */
+	public function get thickness():Number{ return _thickness; }
+	public function set thickness(value:Number):void 
+	{
+		_thickness = value;
+	}
+	
+	/**
+	 * 线条颜色
+	 */
+	public function get lineColor():Number{ return _lineColor; }
+	public function set lineColor(value:Number):void 
+	{
+		_lineColor = value;
 	}
 }
 }
