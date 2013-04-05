@@ -149,6 +149,8 @@ public class MousePathSmoothing
 		this.points = null;
 		if (this.canvas)
 			this.canvas.graphics.clear();
+		this.canvas = null;
+		this.stage = null;
 	}
 	
 	/**
